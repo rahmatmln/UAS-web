@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raja Ampat - Pemesanan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+  <img src="logo.png" alt="Logo Raja Ampat" class="logo-icon">
+  <div>Raja <span>Ampat</span> Tours</div>
+</div>
+  <ul>
+    <li><a href="index.html">Beranda</a></li>
+    <li><a href="paket.html">Paket Wisata</a></li>
+    <li><a href="about.html">Tentang</a></li>
+    <li><a href="pesan.html" class="nav-cta">Pesan Sekarang</a></li>
+  </ul>
+</nav>
+
+<section id="pesan">
+  <div class="section-title">Pemesanan Paket Wisata</div>
+  <p class="section-sub">Isi form di bawah untuk memesan paket wisata impian Anda. Semua field wajib diisi.</p>
+  <div class="form-layout">
+    <!-- Form Kiri -->
+    <div>
+      <div class="form-group">
+        <label>Nama Pemesan</label>
+        <input type="text" id="nama" placeholder="Masukkan nama lengkap Anda">
+      </div>
+      <div class="form-group">
+        <label>Nomor Telepon / HP</label>
+        <input type="tel" id="telp" placeholder="Contoh: 08123456789">
+      </div>
+      <div class="form-group">
+        <label>Waktu Pelaksanaan Perjalanan (hari)</label>
+        <input type="number" id="waktu" placeholder="Contoh: 2" min="1" oninput="hitungTagihan()">
+      </div>
+      <div class="form-group">
+        <label>Jumlah Peserta</label>
+        <input type="number" id="peserta" placeholder="Contoh: 4" min="1" oninput="hitungTagihan()">
+      </div>
+    </div>
+
+    <!-- Form Kanan -->
+    <div>
+      <div class="form-group services-group">
+        <label style="text-transform:uppercase;letter-spacing:0.1em;font-size:0.8rem;color:var(--muted);margin-bottom:0.75rem;display:block;">Pilih Layanan Paket Perjalanan</label>
+        <label class="check-label">
+          <input type="checkbox" id="penginapan" value="1000000" onchange="hitungTagihan()">
+          Penginapan
+          <span class="svc-price">Rp 1.000.000</span>
+        </label>
+        <label class="check-label">
+          <input type="checkbox" id="transportasi" value="1200000" onchange="hitungTagihan()">
+          Transportasi
+          <span class="svc-price">Rp 1.200.000</span>
+        </label>
+        <label class="check-label">
+          <input type="checkbox" id="makanan" value="500000" onchange="hitungTagihan()">
+          Makanan
+          <span class="svc-price">Rp 500.000</span>
+        </label>
+      </div>
+
+      <div class="total-box">
+        <div class="total-row"><span>Harga Paket Perjalanan</span><span id="hargaPaket">Rp 0</span></div>
+        <div class="total-row"><span>Waktu Perjalanan</span><span id="infoWaktu">0 hari</span></div>
+        <div class="total-row"><span>Jumlah Peserta</span><span id="infoPeserta">0 orang</span></div>
+        <div class="total-row main">
+          <span>Total Tagihan</span>
+          <span class="total-amount" id="totalTagihan">Rp 0</span>
+        </div>
+      </div>
+
+      <div class="form-btns">
+        <button class="btn-reset" onclick="resetForm()">Batal</button>
+        <button class="btn-submit" onclick="simpanPesanan()">Simpan & Review Pesanan ›</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEW MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3>📋 Rangkuman Reservasi Paket Wisata</h3>
+    <div id="resumeContent"></div>
+    <div class="modal-total">
+      <div class="label">Total Tagihan</div>
+      <div class="val" id="modalTotal">Rp 0</div>
+    </div>
+    <p style="font-size:0.82rem;color:var(--muted);text-align:center;margin-bottom:0.5rem;">Apakah Anda ingin memesan lagi?</p>
+    <div class="modal-btns">
+      <button class="btn-no" onclick="tutupModal()">Tidak, Selesai</button>
+      <button class="btn-yes" onclick="pesanLagi()">Ya, Pesan Lagi</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="logo">Raja <span>Ampat</span> Tours</div>
+  <div class="contacts">
+    <span>📞 <strong>+62 812 1092 9109</strong></span>
+    <span>🕘 <strong>09:00 – 17:00 WIT</strong></span>
+    <span>📍 <strong>Waisai, Raja Ampat</strong></span>
+  </div>
+  <p>© 2026 Raja Ampat Tours. All rights reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
