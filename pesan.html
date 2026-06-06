@@ -67,10 +67,20 @@
         </label>
       </div>
 
+      <div class="form-group" style="margin-top: 1.5rem;">
+        <label>Kode Voucher (Opsional)</label>
+        <input type="text" id="voucher" placeholder="Masukkan kode voucher (contoh: DISKON10)" oninput="hitungTagihan()" style="text-transform: uppercase;">
+        <small id="voucherMessage" style="display: block; margin-top: 0.25rem; font-size: 0.8rem; font-weight: 500; min-height: 1.2rem;"></small>
+      </div>
+
       <div class="total-box">
         <div class="total-row"><span>Harga Paket Perjalanan</span><span id="hargaPaket">Rp 0</span></div>
         <div class="total-row"><span>Waktu Perjalanan</span><span id="infoWaktu">0 hari</span></div>
         <div class="total-row"><span>Jumlah Peserta</span><span id="infoPeserta">0 orang</span></div>
+        <div class="total-row" id="rowDiskon" style="display: none; color: var(--coral);">
+          <span>Potongan Voucher</span>
+          <span id="nilaiDiskon">-Rp 0</span>
+        </div>
         <div class="total-row main">
           <span>Total Tagihan</span>
           <span class="total-amount" id="totalTagihan">Rp 0</span>
@@ -87,17 +97,25 @@
 
 <!-- REVIEW MODAL -->
 <div class="modal-overlay" id="modalOverlay">
-  <div class="modal">
-    <h3>📋 Rangkuman Reservasi Paket Wisata</h3>
-    <div id="resumeContent"></div>
-    <div class="modal-total">
-      <div class="label">Total Tagihan</div>
-      <div class="val" id="modalTotal">Rp 0</div>
+  <div class="modal" id="modalContainer">
+    <!-- STATE 1: KONFIRMASI -->
+    <div id="modalConfirmState">
+      <h3>📋 Konfirmasi Reservasi</h3>
+      <div id="resumeContent"></div>
+      <div class="modal-total">
+        <div class="label">Total Tagihan</div>
+        <div class="val" id="modalTotal">Rp 0</div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--muted);text-align:center;margin-bottom:1rem;">Apakah Anda ingin mengonfirmasi pesanan ini?</p>
+      <div class="modal-btns">
+        <button class="btn-no" onclick="tutupModal()">Cancel</button>
+        <button class="btn-yes" onclick="konfirmasiPesanan()">Konfirmasi</button>
+      </div>
     </div>
-    <p style="font-size:0.82rem;color:var(--muted);text-align:center;margin-bottom:0.5rem;">Apakah Anda ingin memesan lagi?</p>
-    <div class="modal-btns">
-      <button class="btn-no" onclick="tutupModal()">Tidak, Selesai</button>
-      <button class="btn-yes" onclick="pesanLagi()">Ya, Pesan Lagi</button>
+
+    <!-- STATE 2: TIKET VISUAL (Awalnya disembunyikan) -->
+    <div id="modalTicketState" style="display: none;">
+      <!-- Konten tiket visual akan di-render secara dinamis oleh JavaScript -->
     </div>
   </div>
 </div>
