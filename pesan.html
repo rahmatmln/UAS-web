@@ -26,7 +26,6 @@
   <div class="section-title">Pemesanan Paket Wisata</div>
   <p class="section-sub">Isi form di bawah untuk memesan paket wisata impian Anda. Semua field wajib diisi.</p>
   <div class="form-layout">
-    <!-- Form Kiri -->
     <div>
       <div class="form-group">
         <label>Nama Pemesan</label>
@@ -45,8 +44,6 @@
         <input type="number" id="peserta" placeholder="Contoh: 4" min="1" oninput="hitungTagihan()">
       </div>
     </div>
-
-    <!-- Form Kanan -->
     <div>
       <div class="form-group services-group">
         <label style="text-transform:uppercase;letter-spacing:0.1em;font-size:0.8rem;color:var(--muted);margin-bottom:0.75rem;display:block;">Pilih Layanan Paket Perjalanan</label>
@@ -66,13 +63,11 @@
           <span class="svc-price">Rp 500.000</span>
         </label>
       </div>
-
       <div class="form-group" style="margin-top: 1.5rem;">
         <label>Kode Voucher (Opsional)</label>
         <input type="text" id="voucher" placeholder="Masukkan kode voucher (contoh: DISKON10)" oninput="hitungTagihan()" style="text-transform: uppercase;">
         <small id="voucherMessage" style="display: block; margin-top: 0.25rem; font-size: 0.8rem; font-weight: 500; min-height: 1.2rem;"></small>
       </div>
-
       <div class="total-box">
         <div class="total-row"><span>Harga Paket Perjalanan</span><span id="hargaPaket">Rp 0</span></div>
         <div class="total-row"><span>Waktu Perjalanan</span><span id="infoWaktu">0 hari</span></div>
@@ -86,7 +81,6 @@
           <span class="total-amount" id="totalTagihan">Rp 0</span>
         </div>
       </div>
-
       <div class="form-btns">
         <button class="btn-reset" onclick="resetForm()">Batal</button>
         <button class="btn-submit" onclick="simpanPesanan()">Simpan & Review Pesanan ›</button>
@@ -95,10 +89,8 @@
   </div>
 </section>
 
-<!-- REVIEW MODAL -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal" id="modalContainer">
-    <!-- STATE 1: KONFIRMASI -->
     <div id="modalConfirmState">
       <h3>📋 Konfirmasi Reservasi</h3>
       <div id="resumeContent"></div>
@@ -112,10 +104,7 @@
         <button class="btn-yes" onclick="konfirmasiPesanan()">Konfirmasi</button>
       </div>
     </div>
-
-    <!-- STATE 2: TIKET VISUAL (Awalnya disembunyikan) -->
     <div id="modalTicketState" style="display: none;">
-      <!-- Konten tiket visual akan di-render secara dinamis oleh JavaScript -->
     </div>
   </div>
 </div>

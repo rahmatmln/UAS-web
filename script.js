@@ -1,6 +1,3 @@
-// ==========================================
-// 1. DATA & FORMATTING
-// ==========================================
 const VOUCHERS = {
   'DISKON10': { type: 'percent', value: 10, label: 'Diskon 10%' },
   'DISKON20': { type: 'percent', value: 20, label: 'Diskon 20%' },
@@ -12,13 +9,11 @@ function fmt(n) {
   return 'Rp ' + n.toLocaleString('id-ID');
 }
 
-// ==========================================
-// 2. LOGIKA PEMESANAN (KALKULATOR & VOUCHER)
-// ==========================================
 function hitungTagihan() {
   const waktu = parseInt(document.getElementById('waktu')?.value) || 0;
   const peserta = parseInt(document.getElementById('peserta')?.value) || 0;
   let harga = 0;
+  
   if (document.getElementById('penginapan')?.checked)   harga += 1000000;
   if (document.getElementById('transportasi')?.checked) harga += 1200000;
   if (document.getElementById('makanan')?.checked)      harga += 500000;
@@ -43,10 +38,8 @@ function hitungTagihan() {
       } else if (v.type === 'nominal') {
         diskon = Math.min(v.value, totalSebelumDiskon);
       }
-      
       msgEl.textContent = `✓ Voucher "${code}" berhasil digunakan (${v.label})`;
-      msgEl.style.color = '#4caf50'; // warna hijau sukses
-      
+      msgEl.style.color = '#4caf50';
       if (rowDiskon && diskon > 0) {
         rowDiskon.style.display = 'flex';
         nilaiDiskonEl.textContent = '-' + fmt(diskon);
@@ -55,7 +48,7 @@ function hitungTagihan() {
       }
     } else {
       msgEl.textContent = '✗ Kode voucher tidak valid';
-      msgEl.style.color = 'var(--coral)'; // warna coral/merah error
+      msgEl.style.color = 'var(--coral)';
       if (rowDiskon) rowDiskon.style.display = 'none';
     }
   }
@@ -71,9 +64,6 @@ function hitungTagihan() {
   }
 }
 
-// ==========================================
-// 3. LOGIKA SIMPAN & KONFIRMASI (TIKET)
-// ==========================================
 let currentBooking = null;
 
 function simpanPesanan() {
@@ -138,7 +128,6 @@ function simpanPesanan() {
 
   document.getElementById('resumeContent').innerHTML = resumeHTML;
   document.getElementById('modalTotal').textContent = fmt(total);
-
   document.getElementById('modalConfirmState').style.display = 'block';
   document.getElementById('modalTicketState').style.display = 'none';
   document.getElementById('modalOverlay').classList.add('show');
@@ -148,7 +137,6 @@ function konfirmasiPesanan() {
   if (!currentBooking) return;
 
   const ticketId = 'RAT-' + new Date().getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000);
-
   const activeHotel = currentBooking.layanan.includes('Penginapan') ? 'active hotel' : '';
   const activeTransport = currentBooking.layanan.includes('Transportasi') ? 'active transport' : '';
   const activeFood = currentBooking.layanan.includes('Makanan') ? 'active food' : '';
@@ -181,7 +169,6 @@ function konfirmasiPesanan() {
           <span class="ticket-label">Waktu Perjalanan</span>
           <span class="ticket-value">${currentBooking.waktu} hari</span>
         </div>
-        
         <div class="ticket-services">
           <div class="ticket-services-title">Layanan Terpilih</div>
           <div class="ticket-badges">
@@ -200,7 +187,6 @@ function konfirmasiPesanan() {
           </div>
         </div>
       </div>
-      
       <div class="ticket-footer">
         <div class="ticket-price-box">
           <span class="ticket-label">Total Pembayaran</span>
@@ -210,7 +196,6 @@ function konfirmasiPesanan() {
         <div class="ticket-barcode"></div>
       </div>
     </div>
-    
     <p style="font-size:0.82rem;color:var(--muted);text-align:center;margin-bottom:1rem;margin-top:1.5rem;">🎉 Pemesanan berhasil dikonfirmasi!</p>
     <div class="modal-btns">
       <button class="btn-yes" onclick="pesanLagi()" style="width:100%;">Pesan Lagi</button>
@@ -218,7 +203,6 @@ function konfirmasiPesanan() {
   `;
 
   document.getElementById('modalTicketState').innerHTML = ticketHTML;
-
   document.getElementById('modalConfirmState').style.display = 'none';
   document.getElementById('modalTicketState').style.display = 'block';
 }
@@ -261,27 +245,16 @@ function resetForm() {
   hitungTagihan();
 }
 
-// ==========================================
-// 4. LOGIKA ACCORDION FAQ (HALAMAN ABOUT)
-// ==========================================
 document.addEventListener("DOMContentLoaded", function() {
   const faqItems = document.querySelectorAll('.faq-item');
-  
-  // Script hanya akan jalan kalau di halaman tersebut ada class .faq-item
   if (faqItems.length > 0) {
     faqItems.forEach(item => {
       const question = item.querySelector('.faq-question');
-      
       question.addEventListener('click', () => {
-        // Cek status saat ini
         const isActive = item.classList.contains('active');
-
-        // Tutup semua FAQ yang terbuka
         faqItems.forEach(faq => {
           faq.classList.remove('active');
         });
-
-        // Buka kembali jika sebelumnya tertutup
         if (!isActive) {
           item.classList.add('active');
         }
