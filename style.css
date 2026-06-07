@@ -632,31 +632,52 @@ footer .contacts span strong { color: var(--white); }
    HALAMAN TENTANG KAMI (ABOUT)
 ========================================= */
 
-/* Hero About */
+/* =========================================
+   HALAMAN TENTANG KAMI (ABOUT)
+========================================= */
+
+/* Hero About (Mirip Konsep Index) */
 #about-hero {
-  height: 60vh;
-  min-height: 400px;
+  height: 100vh; /* Memenuhi tinggi layar penuh */
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
   margin-bottom: 2rem;
 }
+
 .about-hero-bg {
   position: absolute; inset: 0;
-  background: linear-gradient(to bottom, rgba(10,17,24,0.9) 0%, rgba(36,177,177,0.2) 100%),
-              url('https://images.unsplash.com/photo-1544483648-5c4e9768652d?w=1600&q=80') center/cover;
+  /* Gradasi disamakan persis dengan beranda (135deg) */
+  background: 
+    linear-gradient(135deg, rgba(10,17,24,0.85) 0%, rgba(36,177,177,0.3) 50%, rgba(10,17,24,0.95) 100%),
+    url('bawahlaut.jpg') center/cover no-repeat;
 }
+
 .about-hero-bg::after {
-  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 100px;
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 150px;
   background: linear-gradient(to top, var(--dark) 0%, transparent 100%);
 }
+
 .about-hero-content {
   position: relative; z-index: 2; text-align: center;
+  padding: 0 1.5rem;
+  animation: fadeUp 1s ease both; /* Efek animasi masuk seperti di index */
 }
+
 .about-hero-content h1 {
-  font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 5vw, 4rem);
-  text-shadow: 0 4px 15px rgba(0,0,0,0.6);
+  font-family: 'Playfair Display', serif;
+  /* Ukuran font dibesarkan menyamai index */
+  font-size: clamp(2.5rem, 6vw, 5.5rem); 
+  line-height: 1.1;
+  font-weight: 700;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.about-hero-content h1 em { 
+  color: var(--brand); 
+  font-style: italic; 
 }
 
 /* Visi Misi (Story) */
@@ -690,8 +711,18 @@ footer .contacts span strong { color: var(--white); }
 .gal-item:hover img { transform: scale(1.1); }
 
 /* FAQ Accordion */
-#about-faq { max-width: 800px; margin: 0 auto; }
-.faq-container { margin-top: 3rem; }
+#about-faq { 
+  max-width: 800px; 
+  margin: 0 auto; 
+  padding-top: 1rem !important;    /* !important memaksa CSS memprioritaskan baris ini */
+  padding-bottom: 2rem !important; 
+  min-height: auto !important;     /* Mencegah jarak kosong karena paksaan tinggi layar */
+}
+
+.faq-container { 
+  margin-top: 1.5rem !important; 
+}
+.faq-container { margin-top: 1rem; }
 .faq-item { background: var(--dark-surface); border: 1px solid var(--border); border-radius: 1rem; margin-bottom: 1rem; overflow: hidden; transition: border-color 0.3s; }
 .faq-item.active { border-color: var(--brand); }
 .faq-question { padding: 1.5rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: white; }
@@ -852,3 +883,49 @@ footer .contacts span strong { color: var(--white); }
   border-radius: 2px;
   opacity: 0.8;
 } 
+
+/* ── LOGIKA BUKA-TUTUP FAQ ── */
+.faq-question {
+  padding: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  user-select: none; /* Biar teks gak ke-blok biru pas di-klik cepat */
+}
+
+/* Animasi untuk ikon tanda (+) berubah jadi (x) */
+.faq-icon {
+  color: var(--brand);
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+.faq-item.active .faq-icon {
+  transform: rotate(45deg); 
+}
+
+/* Kondisi Jawaban saat tertutup */
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 1.5rem;
+  opacity: 0;
+  transition: all 0.3s ease;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* Kondisi Jawaban saat terbuka (Active) */
+.faq-item.active .faq-answer {
+  max-height: 300px; /* Cukup panjang untuk menampung teks */
+  padding-bottom: 1.5rem;
+  opacity: 1;
+}
+
+#about-gallery {
+  padding-top: 2rem !important;
+  padding-bottom: 150px !important;
+  min-height: auto !important;
+}
