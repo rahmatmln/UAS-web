@@ -790,7 +790,7 @@ footer .contacts span strong { color: var(--white); }
   opacity: 1;
 }
 #about-gallery {
-  padding-top: 2rem !important;
-  padding-bottom: 150px !important;
+  padding-top: 50px !important;
+  padding-bottom: 140px !important;
   min-height: auto !important;
 }
