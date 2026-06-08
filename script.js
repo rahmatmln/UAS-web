@@ -71,11 +71,11 @@ function simpanPesanan() {
   const telp  = document.getElementById('telp').value.trim();
   const waktu = parseInt(document.getElementById('waktu').value) || 0;
   const peserta = parseInt(document.getElementById('peserta').value) || 0;
-
   const layanan = [];
-  if (document.getElementById('penginapan').checked)   layanan.push('Penginapan');
+  
+  if (document.getElementById('penginapan').checked) layanan.push('Penginapan');
   if (document.getElementById('transportasi').checked) layanan.push('Transportasi');
-  if (document.getElementById('makanan').checked)      layanan.push('Makanan');
+  if (document.getElementById('makanan').checked) layanan.push('Makanan');
 
   if (!nama || !telp || !waktu || !peserta || layanan.length === 0) {
     alert('⚠️ Data form pemesanan harus terisi lengkap!');
@@ -83,15 +83,15 @@ function simpanPesanan() {
   }
 
   let harga = 0;
-  if (document.getElementById('penginapan').checked)   harga += 1000000;
+  if (document.getElementById('penginapan').checked) harga += 1000000;
   if (document.getElementById('transportasi').checked) harga += 1200000;
-  if (document.getElementById('makanan').checked)      harga += 500000;
+  if (document.getElementById('makanan').checked) harga += 500000;
 
   const totalSebelumDiskon = waktu * peserta * harga;
   let diskon = 0;
   let voucherApplied = '';
-
   const voucherInput = document.getElementById('voucher');
+  
   if (voucherInput) {
     const code = voucherInput.value.trim().toUpperCase();
     if (VOUCHERS[code]) {
@@ -107,9 +107,7 @@ function simpanPesanan() {
 
   const total = Math.max(0, totalSebelumDiskon - diskon);
 
-  currentBooking = {
-    nama, telp, waktu, peserta, layanan, harga, diskon, total, voucherApplied
-  };
+  currentBooking = { nama, telp, waktu, peserta, layanan, harga, diskon, total, voucherApplied };
 
   let resumeHTML = `
     <div class="resume-row"><span class="resume-label">Nama Pemesan</span><span class="resume-val">${nama}</span></div>
@@ -121,15 +119,17 @@ function simpanPesanan() {
   `;
 
   if (diskon > 0) {
-    resumeHTML += `
-      <div class="resume-row" style="color: var(--coral);"><span class="resume-label" style="color: var(--coral);">Potongan Voucher (${voucherApplied})</span><span class="resume-val">-${fmt(diskon)}</span></div>
-    `;
+    resumeHTML += `<div class="resume-row" style="color: var(--coral);"><span class="resume-label" style="color: var(--coral);">Potongan Voucher (${voucherApplied})</span><span class="resume-val">-${fmt(diskon)}</span></div>`;
   }
 
   document.getElementById('resumeContent').innerHTML = resumeHTML;
   document.getElementById('modalTotal').textContent = fmt(total);
   document.getElementById('modalConfirmState').style.display = 'block';
   document.getElementById('modalTicketState').style.display = 'none';
+  
+  const successState = document.getElementById('modalSuccessState');
+  if (successState) successState.style.display = 'none';
+  
   document.getElementById('modalOverlay').classList.add('show');
 }
 
@@ -204,17 +204,12 @@ function konfirmasiPesanan() {
 
   document.getElementById('modalTicketState').innerHTML = ticketHTML;
   document.getElementById('modalConfirmState').style.display = 'none';
-  document.getElementById('modalTicketState').style.display = 'block';
-}
+  document.getElementById('modalSuccessState').style.display = 'block';
 
-function tutupModal() {
-  document.getElementById('modalOverlay').classList.remove('show');
-}
-
-function pesanLagi() {
-  tutupModal();
-  resetForm();
-  document.getElementById('pesan').scrollIntoView({ behavior: 'smooth' });
+  setTimeout(() => {
+    document.getElementById('modalSuccessState').style.display = 'none';
+    document.getElementById('modalTicketState').style.display = 'block';
+  }, 1500);
 }
 
 function resetForm() {
@@ -227,22 +222,31 @@ function resetForm() {
   document.getElementById('makanan').checked = false;
   
   const voucherInput = document.getElementById('voucher');
-  if (voucherInput) {
-    voucherInput.value = '';
-  }
+  if (voucherInput) voucherInput.value = '';
+  
   const msgEl = document.getElementById('voucherMessage');
-  if (msgEl) {
-    msgEl.textContent = '';
-  }
+  if (msgEl) msgEl.textContent = '';
+  
   const rowDiskon = document.getElementById('rowDiskon');
-  if (rowDiskon) {
-    rowDiskon.style.display = 'none';
-  }
+  if (rowDiskon) rowDiskon.style.display = 'none';
 
   document.getElementById('modalConfirmState').style.display = 'block';
   document.getElementById('modalTicketState').style.display = 'none';
   
+  const successState = document.getElementById('modalSuccessState');
+  if (successState) successState.style.display = 'none';
+  
   hitungTagihan();
+}
+
+function tutupModal() {
+  document.getElementById('modalOverlay').classList.remove('show');
+}
+
+function pesanLagi() {
+  tutupModal();
+  resetForm();
+  document.getElementById('pesan').scrollIntoView({ behavior: 'smooth' });
 }
 
 document.addEventListener("DOMContentLoaded", function() {
