@@ -1,8 +1,7 @@
 const VOUCHERS = {
   'DISKON10': { type: 'percent', value: 10, label: 'Diskon 10%' },
   'DISKON20': { type: 'percent', value: 20, label: 'Diskon 20%' },
-  'PROMO50': { type: 'percent', value: 50, label: 'Diskon 50%' },
-  'PIKNIKMURAH': { type: 'nominal', value: 100000, label: 'Potongan Rp 100.000' }
+  'DISKON5' : { type: 'percent', value: 5, label: 'Diskon 5%'}
 };
 
 function fmt(n) {
@@ -82,6 +81,12 @@ function simpanPesanan() {
     return;
   }
 
+  const regexTelp = /^08\d{10}$/;
+  if (!regexTelp.test(telp)) {
+    alert('⚠️ Nomor telepon tidak valid! Harus tepat 12 digit angka dan diawali dengan "08".');
+    return; 
+  }
+
   let harga = 0;
   if (document.getElementById('penginapan').checked) harga += 1000000;
   if (document.getElementById('transportasi').checked) harga += 1200000;
@@ -90,8 +95,8 @@ function simpanPesanan() {
   const totalSebelumDiskon = waktu * peserta * harga;
   let diskon = 0;
   let voucherApplied = '';
-  const voucherInput = document.getElementById('voucher');
   
+  const voucherInput = document.getElementById('voucher');
   if (voucherInput) {
     const code = voucherInput.value.trim().toUpperCase();
     if (VOUCHERS[code]) {
